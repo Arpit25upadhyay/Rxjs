@@ -1,0 +1,13 @@
+ul.video-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+ul.video-list li {
+  background: rgb(214, 208, 208);
+  border: 1px solid rgb(0, 0, 0);
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 10px;
+}

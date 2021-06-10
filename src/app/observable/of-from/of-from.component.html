@@ -1,0 +1,65 @@
+<div class="mx-5 my-3">
+  <h2>Of and From</h2>
+  <br>
+  <strong> Ex-01 (OF)</strong>
+  <hr>
+  <div class="row">
+    <div class="col-md-6">
+      <p class="bg-light py-2 px-3 border rounded">
+        'arpit', 'manish', 'divya'
+      </p>
+      <hr>
+      <ul id="elContainer">
+      </ul>
+    </div>
+    <div class="col-md-6">
+      <p class="bg-light py-2 px-3 border rounded">
+        a:'arpit', b:'manish', c:'divya'
+      </p>
+      <hr>
+      <ul>
+        <li><strong>a:</strong> {{obsMsg.a}}</li>
+        <li><strong>b:</strong> {{obsMsg.b}}</li>
+        <li><strong>c:</strong> {{obsMsg.c}}</li>
+      </ul>
+    </div>
+  </div>
+
+  <strong> Ex-02 (From)</strong>
+  <hr>
+  <div class="row">
+    <div class="col-md-4">
+      <strong>Array</strong>
+      <hr>
+      <p class="bg-light py-2 px-3 border rounded">
+        ['arpit', 'manish', 'divya']
+      </p>
+      <hr>
+      <ul id="elContainer3"></ul>
+    </div>
+
+    <div class="col-md-4">
+      <strong>Promise</strong>
+      <hr>
+      <p class="bg-light py-2 px-3 border rounded">
+        <strong>Promise to Observable</strong>
+      </p>
+      <hr>
+      <ul id="elContainer4"></ul>
+    </div>
+
+    <div class="col-md-4">
+      <strong>String</strong>
+      <hr>
+      <p class="bg-light py-2 px-3 border rounded">
+       <strong>String to Observable</strong>
+      </p>
+      <hr>
+      <ul id="elContainer5"></ul>
+    </div>
+  </div>
+
+</div>
+
+<!-- of- convert the arguments to observable seq 
+    from- create an obserable form array and array like obj-->

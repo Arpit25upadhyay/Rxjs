@@ -1,0 +1,105 @@
+<div class="mx-5 my-3">
+  <h2>Indian Premier League</h2>
+  <br>
+
+  <div class="d-flex flex-row">
+    <!-- season -->
+    <div class="dropdown col-4">
+      <label class="fs14 fs18" for="season">SEASON</label>
+      <select [(ngModel)]="seaSelect" (ngModelChange)="Season(seaSelect)">
+        <option *ngFor="let s of sea" [value]="s.year">{{s.year}}</option>
+      </select>
+    </div>
+
+    <div class="col-1">
+      <input type="radio" id="umpire" (click)="Umpire()">
+      <label for="male">Umpire</label>
+    </div>
+    <div class=" col-1">
+      <input type="radio" id="venue" (click)="Venue()">
+      <label for="female">Venue</label>
+    </div>
+
+    <!-- team -->
+    <div class="dropdown col-4 ms-auto">
+      <label class="fs14 fs18" for="FoodType">Team City</label>
+      <select [(ngModel)]="cityTeam" (ngModelChange)="City(cityTeam)">
+        <option *ngFor="let c of cities" [value]="c.city">{{c.city}}</option>
+      </select>
+    </div>
+  </div>
+
+  <br>
+  <ng-container *ngIf="up && !vflag">
+    <table>
+      <thead>
+        <tr>
+          <th>City</th>
+          <th>Date</th>
+          <th>Player_of_match</th>
+          <th>Season</th>
+          <th>Team1</th>
+          <th>Team2</th>
+          <th>Toss_Dec</th>
+          <th>Toss_Winner</th>
+          <th>Umpire1</th>
+          <th>Umpire2</th>
+          <th>Venue</th>
+          <th>Winner</th>
+        </tr>
+      </thead>
+      <tbody *ngFor="let data of httpdata" id="myData" style="margin-top: 5%;">
+        <td>{{data.city}}</td>
+        <td>{{data.date}}</td>
+        <td>{{data.player_of_match}}</td>
+        <td>{{data.season}}</td>
+        <td>{{data.team1}}</td>
+        <td>{{data.team2}}</td>
+        <td>{{data.toss_decision}}</td>
+        <td>{{data.toss_winner}}</td>
+        <td>{{data.umpire1}}</td>
+        <td>{{data.umpire2}}</td>
+        <td>{{data.venue}}</td>
+        <td>{{data.winner}}</td>
+      </tbody>
+    </table>
+  </ng-container>
+
+  <ng-container *ngIf="!up && !vflag">
+    <div class="row">
+      <div class="column">
+        <table>
+          <thead>
+            <tr>
+              <th>Umpire</th>
+            </tr>
+          </thead>
+          <tbody *ngFor="let data of name">
+            <td>{{data}}</td>
+          </tbody>
+        </table>
+      </div>
+      <div class="column">
+        <table>
+          <thead>
+            <tr>
+              <th>Count</th>
+            </tr>
+          </thead>
+          <tbody *ngFor="let data of count">
+            <td>{{data}}</td>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-container  *ngIf="vflag">
+    <ul>
+      <li *ngFor="let v of venueCityArr">{{v}}</li>
+    </ul>
+  </ng-container>
+
+
+
+</div>

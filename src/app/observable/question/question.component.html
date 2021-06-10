@@ -1,0 +1,28 @@
+<div class="mx-5 my-3">
+  <h2>New And Create Ex</h2>
+  <br>
+
+  <div class="row">
+    <div class="col-md-6">
+      <p class="bg-light py-2 px-3 border rounded">
+        <strong>New KeyWord</strong>
+      </p>
+      <hr>
+      <div *ngFor="let item of arrNew">
+        {{item}}
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <p class="bg-light py-2 px-3 border rounded">
+        <strong>Create KeyWord</strong>
+      </p>
+      <hr>
+      <div *ngFor="let item of arrCreate">
+        {{item}}
+      </div>
+    </div>
+  </div>
+
+
+</div>
