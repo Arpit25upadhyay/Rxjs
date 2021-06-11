@@ -19,12 +19,12 @@
       <button id="venue" (click)="Venue()">Venue</button>
     </div>
     <div class="col-1">
-      <button id="team" (click)="Team()">Team</button>
+      <button id="team" (click)="printTeam()">Team</button>
     </div>
 
     <!-- team -->
-    <div class="dropdown col-4 ms-auto" style="left:13%">
-      <label class="fs14 fs18" for="FoodType">Team City</label>
+    <div class="dropdown col-3 ms-auto" style="left:13%">
+      <label class="fs14 fs18">Team City</label>
       <select [(ngModel)]="cityTeam" (ngModelChange)="City(cityTeam)">
         <option *ngFor="let c of cities" [value]="c.city">{{c.city}}</option>
       </select>
@@ -111,8 +111,8 @@
               <th>Team</th>
             </tr>
           </thead>
-          <tbody *ngFor="let data of teamArr">
-            <td><button (click)="City(data)">{{data}}</button></td>
+          <tbody *ngFor="let tname of teamArr">
+            <td><button (click)="selectTeam(tname)">{{tname}}</button></td>
           </tbody>
         </table>
   </ng-container>

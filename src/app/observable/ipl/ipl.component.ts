@@ -19,7 +19,7 @@ export class IPLComponent implements OnInit {
   name = [];
   count = [];
   umpArr = [];
-  venueArr =[];
+  venueArr = [];
   teamArr = [];
   newArr = [];
   arr = [];
@@ -41,11 +41,21 @@ export class IPLComponent implements OnInit {
     { year: 2013 }, { year: 2014 }, { year: 2015 }, { year: 2016 }];
     //this.seaSelect = 2008;
 
-    this.cities = [{ city: 'Royal Challengers Bangalore' }, { city: 'Kings XI Punjab' }, { city: 'Delhi Daredevils' },
-    { city: 'Kolkata Knight Riders' }, { city: 'Rajasthan Royals' }, { city: 'Mumbai Indians' }, { city: 'Chennai Super Kings' },
-    { city: 'Deccan Chargers' }, { city: "Kochi Tuskers Kerala" },{ city:"Pune Warriors" },
-    { city: "Sunrisers Hyderabad" },{ city:"Rising Pune Supergiants" },{ city: "Gujarat Lions"}];
-    //this.cityTeam = 'Chennai Super Kings';
+    this.cities = [
+      { city: 'Banglore', team: 'Royal Challengers Bangalore' },
+      { city: 'Punjab', team: 'Kings XI Punjab' },
+      { city: 'Delhi', team: 'Delhi Daredevils' },
+      { city: 'Kolkata', team: 'Kolkata Knight Riders' },
+      { city: 'Rajasthan', team: 'Rajasthan Royals' },
+      { city: 'Mumbai', team: 'Mumbai Indians' },
+      { city: 'Chennai', team: 'Chennai Super Kings' },
+      { city: 'Hyderabad', team: 'Deccan Chargers' },
+      { city: 'Kerala', team: "Kochi Tuskers Kerala" },
+      { city: 'Pune', team: "Pune Warriors" },
+      { city: 'HyderabadNew', team: "Sunrisers Hyderabad" },
+      { city: 'PuneNew', team: "Rising Pune Supergiants" },
+      { city: 'Gujarat', team: "Gujarat Lions" }
+    ];
   }
 
   Season(value) {
@@ -64,18 +74,28 @@ export class IPLComponent implements OnInit {
     this.displaydata(this.arr);
   }
 
-  City(team) {
+  City(teamcity) {
     this.up = false;
     this.vflag = false;
     this.tflag = false;
     this.arr = [];
+    for (var key in this.cities) {
+      if (this.cities.hasOwnProperty(key)) {
+        var cityval = this.cities[key];
+        if (cityval.city == teamcity) {
+          var Team = cityval.team;
+        }
+      }
+    }
     for (var key in this.orgData) {
       if (this.orgData.hasOwnProperty(key)) {
         var val = this.orgData[key];
-        if (val.team1 == (team)) {
-          this.arr.push(val);
-        } else if (val.team2 == (team)) {
-          this.arr.push(val);
+        {
+          if (val.team1 == (Team)) {
+            this.arr.push(val);
+          } else if (val.team2 == (Team)) {
+            this.arr.push(val);
+          }
         }
       }
     }
@@ -126,7 +146,7 @@ export class IPLComponent implements OnInit {
     this.venueCityArr = this.venueArr.filter(this.onlyUnique);
   }
 
-  Team(){
+  printTeam() {
     this.vflag = false;
     this.up = false;
     this.tflag = true;
@@ -140,6 +160,23 @@ export class IPLComponent implements OnInit {
       }
     }
     this.teamArr = this.teamArr.filter(this.onlyUnique);
+  }
+
+  selectTeam(tname){
+    this.up = false;
+    this.vflag = false;
+    this.tflag = false;
+    for (var key in this.orgData) {
+      if (this.orgData.hasOwnProperty(key)) {
+        var val = this.orgData[key];
+        if (val.team1 == tname) {
+          this.arr.push(val);
+        }else if (val.team2 == tname) {
+          this.arr.push(val);
+        }
+      }
+    }
+    this.displaydata(this.arr);
   }
 
   displaydata(data) {
