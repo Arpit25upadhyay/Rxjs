@@ -12,21 +12,23 @@ import { Umpire } from 'src/app/umpire';
 export class IPLComponent implements OnInit {
 
   constructor(private http: HttpClient) { }
-  up = true;
+  up = false;
+  tflag = false;
   vflag = false;
   httpdata;
   name = [];
   count = [];
   umpArr = [];
   venueArr =[];
+  teamArr = [];
   newArr = [];
   arr = [];
+  venueCityArr = [];
   Ump: Umpire[];
   sea: Season[];
   cities: TeamCity[];
   cityTeam: string;
   seaSelect: number;
-  venueCityArr = [];
   orgData;
 
   ngOnInit(): void {
@@ -37,16 +39,19 @@ export class IPLComponent implements OnInit {
       })
     this.sea = [{ year: 2008 }, { year: 2009 }, { year: 2010 }, { year: 2011 }, { year: 2012 },
     { year: 2013 }, { year: 2014 }, { year: 2015 }, { year: 2016 }];
-    this.seaSelect = 2008;
+    //this.seaSelect = 2008;
 
     this.cities = [{ city: 'Royal Challengers Bangalore' }, { city: 'Kings XI Punjab' }, { city: 'Delhi Daredevils' },
     { city: 'Kolkata Knight Riders' }, { city: 'Rajasthan Royals' }, { city: 'Mumbai Indians' }, { city: 'Chennai Super Kings' },
-    { city: 'Deccan Chargers' }];
-    this.cityTeam = 'Chennai Super Kings';
-
+    { city: 'Deccan Chargers' }, { city: "Kochi Tuskers Kerala" },{ city:"Pune Warriors" },
+    { city: "Sunrisers Hyderabad" },{ city:"Rising Pune Supergiants" },{ city: "Gujarat Lions"}];
+    //this.cityTeam = 'Chennai Super Kings';
   }
 
   Season(value) {
+    this.up = false;
+    this.vflag = false;
+    this.tflag = false;
     this.arr = [];
     for (var key in this.orgData) {
       if (this.orgData.hasOwnProperty(key)) {
@@ -60,6 +65,9 @@ export class IPLComponent implements OnInit {
   }
 
   City(team) {
+    this.up = false;
+    this.vflag = false;
+    this.tflag = false;
     this.arr = [];
     for (var key in this.orgData) {
       if (this.orgData.hasOwnProperty(key)) {
@@ -75,7 +83,9 @@ export class IPLComponent implements OnInit {
   }
 
   Umpire() {
-    this.up = false;
+    this.up = true;
+    this.vflag = false;
+    this.tflag = false;
     var count = 0;
     this.umpArr = [];
     for (var key in this.orgData) {
@@ -86,7 +96,6 @@ export class IPLComponent implements OnInit {
         }
       }
     }
-    console.log(this.umpArr.filter(this.onlyUnique));
     this.newArr = this.umpArr.filter(this.onlyUnique);
     for (var j = 0; j < this.newArr.length; j++) {
       count = 0;
@@ -104,7 +113,7 @@ export class IPLComponent implements OnInit {
   Venue() {
     this.vflag = true;
     this.up = false;
-    var count = 0;
+    this.tflag = false;
     this.venueArr = [];
     for (var key in this.orgData) {
       if (this.orgData.hasOwnProperty(key)) {
@@ -117,10 +126,25 @@ export class IPLComponent implements OnInit {
     this.venueCityArr = this.venueArr.filter(this.onlyUnique);
   }
 
+  Team(){
+    this.vflag = false;
+    this.up = false;
+    this.tflag = true;
+    this.teamArr = [];
+    for (var key in this.orgData) {
+      if (this.orgData.hasOwnProperty(key)) {
+        var val = this.orgData[key];
+        {
+          this.teamArr.push(val.team1);
+        }
+      }
+    }
+    this.teamArr = this.teamArr.filter(this.onlyUnique);
+  }
+
   displaydata(data) {
     this.httpdata = data;
   }
-
   onlyUnique(value, index, self) {
     return self.indexOf(value) === index;
   }

@@ -2,6 +2,7 @@
   <h2>Indian Premier League</h2>
   <br>
 
+
   <div class="d-flex flex-row">
     <!-- season -->
     <div class="dropdown col-4">
@@ -12,25 +13,28 @@
     </div>
 
     <div class="col-1">
-      <input type="radio" id="umpire" (click)="Umpire()">
-      <label for="male">Umpire</label>
+      <button id="umpire" (click)="Umpire()">Umpire</button>
     </div>
-    <div class=" col-1">
-      <input type="radio" id="venue" (click)="Venue()">
-      <label for="female">Venue</label>
+    <div class="col-1">
+      <button id="venue" (click)="Venue()">Venue</button>
+    </div>
+    <div class="col-1">
+      <button id="team" (click)="Team()">Team</button>
     </div>
 
     <!-- team -->
-    <div class="dropdown col-4 ms-auto">
+    <div class="dropdown col-4 ms-auto" style="left:13%">
       <label class="fs14 fs18" for="FoodType">Team City</label>
       <select [(ngModel)]="cityTeam" (ngModelChange)="City(cityTeam)">
         <option *ngFor="let c of cities" [value]="c.city">{{c.city}}</option>
       </select>
     </div>
   </div>
+</div>
 
-  <br>
-  <ng-container *ngIf="up && !vflag">
+<br>
+<div class="mx-2">
+  <ng-container *ngIf="!up && !vflag && !tflag">
     <table>
       <thead>
         <tr>
@@ -65,7 +69,7 @@
     </table>
   </ng-container>
 
-  <ng-container *ngIf="!up && !vflag">
+  <ng-container *ngIf="up && !vflag && !tflag">
     <div class="row">
       <div class="column">
         <table>
@@ -94,12 +98,23 @@
     </div>
   </ng-container>
 
-  <ng-container  *ngIf="vflag">
+  <ng-container *ngIf="vflag && !tflag && !up"> ">
     <ul>
       <li *ngFor="let v of venueCityArr">{{v}}</li>
     </ul>
   </ng-container>
 
-
+  <ng-container *ngIf="!up && !vflag && tflag">
+        <table>
+          <thead>
+            <tr>
+              <th>Team</th>
+            </tr>
+          </thead>
+          <tbody *ngFor="let data of teamArr">
+            <td><button (click)="City(data)">{{data}}</button></td>
+          </tbody>
+        </table>
+  </ng-container>
 
 </div>
