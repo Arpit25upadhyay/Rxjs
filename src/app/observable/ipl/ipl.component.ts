@@ -39,7 +39,7 @@ export class IPLComponent implements OnInit {
       })
     this.sea = [{ year: 2008 }, { year: 2009 }, { year: 2010 }, { year: 2011 }, { year: 2012 },
     { year: 2013 }, { year: 2014 }, { year: 2015 }, { year: 2016 }];
-    //this.seaSelect = 2008;
+    this.seaSelect = 2008;
 
     this.cities = [
       { city: 'Banglore', team: 'Royal Challengers Bangalore' },
@@ -56,6 +56,7 @@ export class IPLComponent implements OnInit {
       { city: 'PuneNew', team: "Rising Pune Supergiants" },
       { city: 'Gujarat', team: "Gujarat Lions" }
     ];
+    this.cityTeam = 'Banglore';
   }
 
   Season(value) {
@@ -166,6 +167,7 @@ export class IPLComponent implements OnInit {
     this.up = false;
     this.vflag = false;
     this.tflag = false;
+    this.arr = [];
     for (var key in this.orgData) {
       if (this.orgData.hasOwnProperty(key)) {
         var val = this.orgData[key];
