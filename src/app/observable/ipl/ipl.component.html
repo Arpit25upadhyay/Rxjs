@@ -22,7 +22,7 @@
     </div>
 
     <!-- team -->
-    <div class="dropdown col-3 ms-auto" style="left:13%">
+    <div class="dropdown col-3 ms-auto" style="left:13%" *ngIf ='!teamFlag && !umpireFlag && !venueFlag && !afterTeamFlag'>
       <label class="fs14 fs18">Team City</label>
       <select [(ngModel)]="cityTeam" (ngModelChange)="City(cityTeam)">
         <option *ngFor="let c of cities" [value]="c.city">{{c.city}}</option>
@@ -33,7 +33,7 @@
 
 <br>
 <div class="mx-2">
-  <ng-container *ngIf="!up && !vflag && !tflag">
+  <ng-container *ngIf="!umpireFlag && !venueFlag && !teamFlag">
     <table>
       <thead>
         <tr>
@@ -53,7 +53,7 @@
       </thead>
       <tbody *ngFor="let data of httpdata" id="myData" style="margin-top: 5%;">
         <td>{{data.city}}</td>
-        <td>{{data.date}}</td>
+        <td id='date'>{{data.date}}</td>
         <td>{{data.player_of_match}}</td>
         <td>{{data.season}}</td>
         <td>{{data.team1}}</td>
@@ -68,7 +68,7 @@
     </table>
   </ng-container>
 
-  <ng-container *ngIf="up && !vflag && !tflag">
+  <ng-container *ngIf="umpireFlag && !venueFlag && !teamFlag">
     <div class="row">
       <div class="column">
         <table>
@@ -97,23 +97,22 @@
     </div>
   </ng-container>
 
-  <ng-container *ngIf="vflag && !tflag && !up"> ">
+  <ng-container *ngIf="venueFlag && !teamFlag && !umpireFlag">
     <ul>
       <li *ngFor="let v of venueCityArr">{{v}}</li>
     </ul>
   </ng-container>
 
-  <ng-container *ngIf="!up && !vflag && tflag">
+  <ng-container *ngIf="!umpireFlag && !venueFlag && teamFlag">
         <table>
           <thead>
             <tr>
               <th>Team</th>
             </tr>
           </thead>
-          <tbody *ngFor="let tname of teamArr">
+          <tbody *ngFor="let tname of teamList">
             <td><button (click)="selectTeam(tname)">{{tname}}</button></td>
           </tbody>
         </table>
   </ng-container>
-
 </div>
