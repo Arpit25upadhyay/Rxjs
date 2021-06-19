@@ -1,7 +1,6 @@
-<div class="mx-5 my-3">
+<div class="container">
   <h2>Indian Premier League</h2>
   <br>
-
   <div class="d-flex flex-row">
     <!-- season -->
     <div class="dropdown col-4">
@@ -22,17 +21,15 @@
     </div>
 
     <!-- team -->
-    <div class="dropdown col-3 ms-auto" style="left:13%" *ngIf ='!teamFlag && !umpireFlag && !venueFlag && !afterTeamFlag'>
+    <div class="dropdown col-3 ms-auto" style="left : 7.5rem"
+      *ngIf='!teamFlag && !umpireFlag && !venueFlag && !afterTeamFlag'>
       <label class="fs14 fs18">Team City</label>
       <select [(ngModel)]="cityTeam" (ngModelChange)="City(cityTeam)">
         <option *ngFor="let c of cities" [value]="c.city">{{c.city}}</option>
       </select>
     </div>
   </div>
-</div>
-
-<br>
-<div class="mx-2">
+  <br>
   <ng-container *ngIf="!umpireFlag && !venueFlag && !teamFlag">
     <table>
       <thead>
@@ -104,15 +101,15 @@
   </ng-container>
 
   <ng-container *ngIf="!umpireFlag && !venueFlag && teamFlag">
-        <table>
-          <thead>
-            <tr>
-              <th>Team</th>
-            </tr>
-          </thead>
-          <tbody *ngFor="let tname of teamList">
-            <td><button (click)="selectTeam(tname)">{{tname}}</button></td>
-          </tbody>
-        </table>
+    <table>
+      <thead>
+        <tr>
+          <th>Team</th>
+        </tr>
+      </thead>
+      <tbody *ngFor="let tname of teamList">
+        <td><button (click)="selectTeam(tname)">{{tname}}</button></td>
+      </tbody>
+    </table>
   </ng-container>
 </div>

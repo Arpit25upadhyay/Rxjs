@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Season } from 'src/app/season';
 import { TeamCity } from 'src/app/teamCity';
+import { fn } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'app-ipl',
@@ -42,12 +43,12 @@ export class IPLComponent implements OnInit {
     this.sea = [
       { year: 2008 },
       { year: 2009 },
-      { year: 2010 }, 
-      { year: 2011 }, 
+      { year: 2010 },
+      { year: 2011 },
       { year: 2012 },
-      { year: 2013 }, 
-      { year: 2014 }, 
-      { year: 2015 }, 
+      { year: 2013 },
+      { year: 2014 },
+      { year: 2015 },
       { year: 2016 }];
     this.seaSelect = 2008;
 
@@ -67,32 +68,17 @@ export class IPLComponent implements OnInit {
       { city: 'Gujarat', team: "Gujarat Lions" }];
     this.cityTeam = 'Banglore';
   }
-
   Season(value) {
     this.umpireFlag = false;
     this.venueFlag = false;
     this.teamFlag = false;
     this.arr = [];
-    if(this.afterTeamFlag == false){
-      for (var key in this.orgData) {
-        if (this.orgData.hasOwnProperty(key)) {
-          var val = this.orgData[key];
-          if (val.season == Number(value)) {
-            this.arr.push(val);
-          }
-        }
-      }
+    if (this.afterTeamFlag == false) {
+      this.orgData.map(x => x.season == Number(value) ? this.arr.push(x) : x)
     }
     else if (this.afterTeamFlag == true) {
       this.teamArray;
-      for(var key in this.teamArray){
-        if (this.teamArray.hasOwnProperty(key)){
-          var val = this.teamArray[key];
-          if(val.season == Number(value)){
-            this.arr.push(val);
-          }
-        }
-      }
+      this.teamArray.map(x => x.season == Number(value) ? this.arr.push(x) : x)
     }
     this.displaydata(this.arr);
   }
@@ -103,26 +89,9 @@ export class IPLComponent implements OnInit {
     this.teamFlag = false;
     this.afterTeamFlag = false;
     this.arr = [];
-    for (var key in this.cities) {
-      if (this.cities.hasOwnProperty(key)) {
-        var cityval = this.cities[key];
-        if (cityval.city == teamcity) {
-          var Team = cityval.team;
-        }
-      }
-    }
-    for (var key in this.orgData) {
-      if (this.orgData.hasOwnProperty(key)) {
-        var val = this.orgData[key];
-        {
-          if (val.team1 == (Team)) {
-            this.arr.push(val);
-          } else if (val.team2 == (Team)) {
-            this.arr.push(val);
-          }
-        }
-      }
-    }
+    var Team;
+    this.cities.map(x => x.city == teamcity ? Team = x.team : x);
+    this.orgData.map(x => x.team1 == Team ? this.arr.push(x) : x.team2 == Team ? this.arr.push(x) : x);
     this.displaydata(this.arr);
   }
 
@@ -133,15 +102,9 @@ export class IPLComponent implements OnInit {
     this.afterTeamFlag = false;
     var count = 0;
     this.umpireList = [];
-    for (var key in this.orgData) {
-      if (this.orgData.hasOwnProperty(key)) {
-        var val = this.orgData[key];
-        {
-          this.umpireList.push(val.umpire1);
-        }
-      }
-    }
+    this.orgData.map(x => this.umpireList.push(x.umpire1))
     this.newArray = this.umpireList.filter(this.onlyUnique);
+    
     for (var j = 0; j < this.newArray.length; j++) {
       count = 0;
       for (var k = 0; k < this.umpireList.length; k++) {
@@ -160,14 +123,7 @@ export class IPLComponent implements OnInit {
     this.teamFlag = false;
     this.afterTeamFlag = false;
     this.venueList = [];
-    for (var key in this.orgData) {
-      if (this.orgData.hasOwnProperty(key)) {
-        var val = this.orgData[key];
-        {
-          this.venueList.push(val.venue);
-        }
-      }
-    }
+    this.orgData.map(x => this.venueList.push(x.venue));
     this.venueCityArr = this.venueList.filter(this.onlyUnique);
   }
 
@@ -177,34 +133,18 @@ export class IPLComponent implements OnInit {
     this.afterTeamFlag = false;
     this.teamFlag = true;
     this.teamList = [];
-    for (var key in this.orgData) {
-      if (this.orgData.hasOwnProperty(key)) {
-        var val = this.orgData[key];
-        {
-          this.teamList.push(val.team1);
-        }
-      }
-    }
+    this.orgData.map(x => this.teamList.push(x.team1));
     this.teamList = this.teamList.filter(this.onlyUnique);
   }
 
-  selectTeam(tname){
+  selectTeam(tname) {
     this.umpireFlag = false;
     this.venueFlag = false;
     this.teamFlag = false;
     this.afterTeamFlag = true;
     this.teamArray = [];
     this.arr = [];
-    for (var key in this.orgData) {
-      if (this.orgData.hasOwnProperty(key)) {
-        var val = this.orgData[key];
-        if (val.team1 == tname) {
-          this.arr.push(val);
-        }else if (val.team2 == tname) {
-          this.arr.push(val);
-        }
-      }
-    }
+    this.orgData.map(x => x.team1 == tname ? this.arr.push(x) : x.team2 == tname ? this.arr.push(x) : x);
     this.teamArray = this.arr;
     this.displaydata(this.arr);
   }
@@ -212,6 +152,7 @@ export class IPLComponent implements OnInit {
   displaydata(data) {
     this.httpdata = data;
   }
+
   onlyUnique(value, index, self) {
     return self.indexOf(value) === index;
   }
