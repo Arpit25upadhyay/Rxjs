@@ -5,16 +5,16 @@
     <!-- season -->
     <div class="dropdown col-4">
       <label class="fs14 fs18" for="season">SEASON</label>
-      <select [(ngModel)]="seaSelect" (ngModelChange)="Season(seaSelect)">
-        <option *ngFor="let s of sea" [value]="s.year">{{s.year}}</option>
+      <select [(ngModel)]="seasonSelect" (ngModelChange)="season(seasonSelect)">
+        <option *ngFor="let s of seasonList" [value]="s.year">{{s.year}}</option>
       </select>
     </div>
 
     <div class="col-1">
-      <button id="umpire" (click)="Umpire()">Umpire</button>
+      <button id="umpire" (click)="umpire()">Umpire</button>
     </div>
     <div class="col-1">
-      <button id="venue" (click)="Venue()">Venue</button>
+      <button id="venue" (click)="venue()">Venue</button>
     </div>
     <div class="col-1">
       <button id="team" (click)="printTeam()">Team</button>
@@ -22,9 +22,9 @@
 
     <!-- team -->
     <div class="dropdown col-3 ms-auto" style="left : 7.5rem"
-      *ngIf='!teamFlag && !umpireFlag && !venueFlag && !afterTeamFlag'>
+      *ngIf='!teamFlag && !umpireFlag && !venueFlag && !selectTeamFlag'>
       <label class="fs14 fs18">Team City</label>
-      <select [(ngModel)]="cityTeam" (ngModelChange)="City(cityTeam)">
+      <select [(ngModel)]="cityTeam" (ngModelChange)="city(cityTeam)">
         <option *ngFor="let c of cities" [value]="c.city">{{c.city}}</option>
       </select>
     </div>
@@ -74,7 +74,7 @@
               <th>Umpire</th>
             </tr>
           </thead>
-          <tbody *ngFor="let data of name">
+          <tbody *ngFor="let data of umpireName">
             <td>{{data}}</td>
           </tbody>
         </table>
@@ -86,7 +86,7 @@
               <th>Count</th>
             </tr>
           </thead>
-          <tbody *ngFor="let data of count">
+          <tbody *ngFor="let data of umpireCount">
             <td>{{data}}</td>
           </tbody>
         </table>
