@@ -6,7 +6,7 @@
     <div class="dropdown col-4">
       <label class="fs14 fs18" for="season">SEASON</label>
       <select [(ngModel)]="seasonSelect" (ngModelChange)="season(seasonSelect)">
-        <option *ngFor="let s of seasonList" [value]="s.year">{{s.year}}</option>
+        <option *ngFor="let getSeason of seasonList" [value]="getSeason.year">{{getSeason.year}}</option>
       </select>
     </div>
 
@@ -25,7 +25,7 @@
       *ngIf='!teamFlag && !umpireFlag && !venueFlag && !selectTeamFlag'>
       <label class="fs14 fs18">Team City</label>
       <select [(ngModel)]="cityTeam" (ngModelChange)="city(cityTeam)">
-        <option *ngFor="let c of cities" [value]="c.city">{{c.city}}</option>
+        <option *ngFor="let getCity of cities" [value]="getCity.city">{{getCity.city}}</option>bh
       </select>
     </div>
   </div>
@@ -96,7 +96,7 @@
 
   <ng-container *ngIf="venueFlag && !teamFlag && !umpireFlag">
     <ul>
-      <li *ngFor="let v of venueCityArr">{{v}}</li>
+      <li *ngFor="let venueName of venueCityArr">{{venueName.venue}}</li>
     </ul>
   </ng-container>
 
@@ -107,8 +107,8 @@
           <th>Team</th>
         </tr>
       </thead>
-      <tbody *ngFor="let tname of teamList">
-        <td><button (click)="selectTeam(tname)">{{tname}}</button></td>
+      <tbody *ngFor="let teamName of teamList">
+        <td><button (click)="selectTeam(teamName)">{{teamName}}</button></td>
       </tbody>
     </table>
   </ng-container>

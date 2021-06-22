@@ -2,8 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Season } from 'src/app/season';
 import { TeamCity } from 'src/app/teamCity';
-import { IData } from 'src/app/iplData';
+import { IplData } from 'src/app/iplData';
 import { Observable } from 'rxjs';
+import { Venue } from 'src/app/venue';
+import { Team } from 'src/app/team';
 
 @Component({
   selector: 'app-ipl',
@@ -18,29 +20,30 @@ export class IPLComponent implements OnInit {
   venueFlag: boolean = false;
   selectTeamFlag: boolean = false;
   httpdata;
-  orgData: IData[];
+  orgData: IplData[];
   umpireList: Array<string> = [];
-  venueList: Array<string> = [];
-  teamList: Array<string> = [];
   umpireName: Array<string> = [];
   umpireCount: Array<number> = [];
-  tempArray: Array<string> = [];
+  uniqueUmpireArr: Array<string> = [];
   arr: Array<any> = [];
-  venueCityArr: Array<string> = [];
+  //venueList: Array<string> = [];
+  venueList: Venue[] = [];
+  //venueCityArr: Array<string> = [];
+  venueCityArr: Venue[] = [];
+  teamList: Array<string> = [];
+  //teamList: Team[] = [];
   teamArray: Array<any> = [];
+  //teamArray: Team[] = [];
   seasonList: Season[];
   seasonSelect: number;
   cities: TeamCity[];
   cityTeam: string;
 
   ngOnInit(): void {
-
     this.getData().subscribe((Response) => {
-        this.orgData = Response;
-        this.displayData(Response);
-        console.log(Response);
-      })
-
+      this.orgData = Response;
+      this.displayData(Response);
+    })
     this.seasonList = [
       { year: 2008 },
       { year: 2009 },
@@ -52,7 +55,6 @@ export class IPLComponent implements OnInit {
       { year: 2015 },
       { year: 2016 }];
     this.seasonSelect = 2008;
-
     this.cities = [
       { city: 'Banglore', team: 'Royal Challengers Bangalore' },
       { city: 'Punjab', team: 'Kings XI Punjab' },
@@ -69,9 +71,8 @@ export class IPLComponent implements OnInit {
       { city: 'Gujarat', team: "Gujarat Lions" }];
     this.cityTeam = 'Banglore';
   }
-
-  getData(): Observable<IData[]> {
-    return this.http.get<IData[]>('https://gist.githubusercontent.com/nitinknolder/676d2616e249eb7eb1d3004e4c7ef4d0/raw/7df7f77a97f88110eedb5c44d995944aa5de465e/matches.json')
+  getData(): Observable<IplData[]> {
+    return this.http.get<IplData[]>('https://gist.githubusercontent.com/nitinknolder/676d2616e249eb7eb1d3004e4c7ef4d0/raw/7df7f77a97f88110eedb5c44d995944aa5de465e/matches.json')
   }
 
   season(value) {
@@ -80,11 +81,11 @@ export class IPLComponent implements OnInit {
     this.teamFlag = false;
     this.arr = [];
     if (this.selectTeamFlag == false) {
-      this.orgData.map(x => x.season == Number(value) ? this.arr.push(x) : x)
+      this.orgData.map(val => val.season == Number(value) ? this.arr.push(val) : val)
     }
     else if (this.selectTeamFlag == true) {
       this.teamArray;
-      this.teamArray.map(x => x.season == Number(value) ? this.arr.push(x) : x)
+      this.teamArray.map(val => val.season == Number(value) ? this.arr.push(val) : val)
     }
     this.displayData(this.arr);
   }
@@ -96,8 +97,8 @@ export class IPLComponent implements OnInit {
     this.selectTeamFlag = false;
     this.arr = [];
     var Team;
-    this.cities.map(x => x.city == teamcity ? Team = x.team : x);
-    this.orgData.map(x => x.team1 == Team ? this.arr.push(x) : x.team2 == Team ? this.arr.push(x) : x);
+    this.cities.map(val => val.city == teamcity ? Team = val.team : val);
+    this.orgData.map(val => val.team1 == Team ? this.arr.push(val) : val.team2 == Team ? this.arr.push(val) : val);
     this.displayData(this.arr);
   }
 
@@ -108,17 +109,16 @@ export class IPLComponent implements OnInit {
     this.selectTeamFlag = false;
     var count = 0;
     this.umpireList = [];
-    this.orgData.map(x => this.umpireList.push(x.umpire1))
-    this.tempArray = this.umpireList.filter(this.onlyUnique);
-
-    for (var j = 0; j < this.tempArray.length; j++) {
+    this.orgData.map(val => this.umpireList.push(val.umpire1))
+    this.uniqueUmpireArr = this.umpireList.filter(this.onlyUnique);
+    for (var index = 0; index < this.uniqueUmpireArr.length; index++) {
       count = 0;
-      for (var k = 0; k < this.umpireList.length; k++) {
-        if (this.tempArray[j] == this.umpireList[k]) {
+      for (var orgIndex = 0; orgIndex < this.umpireList.length; orgIndex++) {
+        if (this.uniqueUmpireArr[index] == this.umpireList[orgIndex]) {
           count++;
         }
       }
-      this.umpireName.push(this.tempArray[j]);
+      this.umpireName.push(this.uniqueUmpireArr[index]);
       this.umpireCount.push(count);
     }
   }
@@ -129,7 +129,11 @@ export class IPLComponent implements OnInit {
     this.teamFlag = false;
     this.selectTeamFlag = false;
     this.venueList = [];
-    this.orgData.map(x => this.venueList.push(x.venue));
+    this.orgData.map(val => {
+      var venueObj = new Venue();
+      venueObj.venue = val.venue;
+      this.venueList.push(venueObj);
+    });
     this.venueCityArr = this.venueList.filter(this.onlyUnique);
   }
 
@@ -139,7 +143,7 @@ export class IPLComponent implements OnInit {
     this.selectTeamFlag = false;
     this.teamFlag = true;
     this.teamList = [];
-    this.orgData.map(x => this.teamList.push(x.team1));
+    this.orgData.map(val => this.teamList.push(val.team1));
     this.teamList = this.teamList.filter(this.onlyUnique);
   }
 
@@ -150,7 +154,7 @@ export class IPLComponent implements OnInit {
     this.selectTeamFlag = true;
     this.teamArray = [];
     this.arr = [];
-    this.orgData.map(x => x.team1 == tname ? this.arr.push(x) : x.team2 == tname ? this.arr.push(x) : x);
+    this.orgData.map(val => val.team1 == tname ? this.arr.push(val) : val.team2 == tname ? this.arr.push(val) : val);
     this.teamArray = this.arr;
     this.displayData(this.arr);
   }
