@@ -21,19 +21,16 @@ export class IPLComponent implements OnInit {
   selectTeamFlag: boolean = false;
   httpdata;
   orgData: IplData[];
+  venueCityArr: Array<Venue> = [];
+  teamArray: Array<Team> = [];
+  teamList: Array<string> = [];
+  venueList: Array<string> = [];
   umpireList: Array<string> = [];
   umpireName: Array<string> = [];
-  umpireCount: Array<number> = [];
   uniqueUmpireArr: Array<string> = [];
+  umpireCount: Array<number> = [];
   arr: Array<any> = [];
-  //venueList: Array<string> = [];
-  venueList: Venue[] = [];
-  //venueCityArr: Array<string> = [];
-  venueCityArr: Venue[] = [];
-  teamList: Array<string> = [];
-  //teamList: Team[] = [];
-  teamArray: Array<any> = [];
-  //teamArray: Team[] = [];
+  
   seasonList: Season[];
   seasonSelect: number;
   cities: TeamCity[];
@@ -110,6 +107,7 @@ export class IPLComponent implements OnInit {
     var count = 0;
     this.umpireList = [];
     this.orgData.map(val => this.umpireList.push(val.umpire1))
+    console.log(this.umpireList);
     this.uniqueUmpireArr = this.umpireList.filter(this.onlyUnique);
     for (var index = 0; index < this.uniqueUmpireArr.length; index++) {
       count = 0;
@@ -129,12 +127,12 @@ export class IPLComponent implements OnInit {
     this.teamFlag = false;
     this.selectTeamFlag = false;
     this.venueList = [];
-    this.orgData.map(val => {
+    this.orgData.map(val => this.venueList.push(val.venue));
+    this.venueList.filter(this.onlyUnique).map(data =>{
       var venueObj = new Venue();
-      venueObj.venue = val.venue;
-      this.venueList.push(venueObj);
+      venueObj.venueName = data;
+      this.venueCityArr.push(venueObj); 
     });
-    this.venueCityArr = this.venueList.filter(this.onlyUnique);
   }
 
   printTeam() {

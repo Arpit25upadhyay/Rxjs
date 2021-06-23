@@ -1,3 +1,3 @@
 export class Venue{
-    public venue : string;
+    public venueName : string;
 }
